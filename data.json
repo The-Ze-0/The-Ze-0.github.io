@@ -1,0 +1,7 @@
+[
+    {"id": "math", "name": "Math", "description": "Learn and practice mathematics with AI-driven exercises and personalized feedback."},
+    {"id": "english", "name": "English", "description": "Improve your English skills with adaptive learning modules and AI-powered assessments."},
+    {"id": "chemistry", "name": "Chemistry", "description": "Explore the world of chemistry with interactive lessons and AI-guided experiments."},
+    {"id": "physics", "name": "Physics", "description": "Understand the principles of physics through AI-enhanced simulations and practice problems."},
+    {"id": "more", "name": "More", "description": "Discover additional subjects and resources tailored to your learning needs."}
+]

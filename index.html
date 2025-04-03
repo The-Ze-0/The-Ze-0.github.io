@@ -4,52 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Learning Platform</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
         <h1>AI Learning Platform</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#subjects">Subjects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
     </header>
+    <nav>
+        <ul>
+            <li><a href="#math">Math</a></li>
+            <li><a href="#english">English</a></li>
+            <li><a href="#chemistry">Chemistry</a></li>
+            <li><a href="#physics">Physics</a></li>
+            <li><a href="#more">More</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% for subject in subjects %}
+        <section id="{{ subject.id }}" class="subject-card">
+            <h3>{{ subject.name }}</h3>
+            <p>{{ subject.description }}</p>
+        </section>
+        {% endfor %}
+    </main>
+    <button id="toggle-dark-mode-btn">Toggle Dark Mode</button>
 
-    <section id="hero">
-        <h2>Welcome to AI Learning Platform</h2>
-        <p>Learn with the power of AI. Explore various subjects and enhance your knowledge.</p>
-    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const subjectCards = document.querySelectorAll('.subject-card');
+            subjectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const subjectName = card.querySelector('h3').textContent;
+                    alert(`You clicked on ${subjectName}! Let's start learning!`);
+                });
+            });
 
-    <section id="subjects">
-        <h2>Subjects</h2>
-        <div class="subject-cards">
-            <div class="subject-card">
-                <h3>Math</h3>
-                <p>Learn mathematics with AI-driven tools and resources.</p>
-            </div>
-            <div class="subject-card">
-                <h3>English</h3>
-                <p>Improve your English skills with personalized AI assistance.</p>
-            </div>
-            <div class="subject-card">
-                <h3>Chemistry</h3>
-                <p>Explore the world of chemistry with interactive AI lessons.</p>
-            </div>
-            <div class="subject-card">
-                <h3>Physics</h3>
-                <p>Understand physics concepts with AI-powered simulations.</p>
-            </div>
-            <!-- Add more subjects as needed -->
-        </div>
-    </section>
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', event => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
 
-    <footer id="contact">
-        <p>Contact us at <a href="mailto:info@ailearning.com">info@ailearning.com</a></p>
-    </footer>
-
-    <script src="script.js" defer></script>
+            const toggleDarkModeButton = document.getElementById('toggle-dark-mode-btn');
+            toggleDarkModeButton.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                fetch('/api/toggle-dark-mode', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => console.log(data.message));
+            });
+        });
+    </script>
 </body>
 </html>
